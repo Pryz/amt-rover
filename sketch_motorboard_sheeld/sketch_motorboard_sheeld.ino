@@ -7,6 +7,7 @@ int ledPin = 13;
 /* Include 1Sheeld library. */
 #include <OneSheeld.h>
 #include <AFMotor.h>
+#include <Servo.h>
 
 // Motor objects, motor number on the motor shield board
 AF_DCMotor motorBackRight(1);
@@ -14,7 +15,9 @@ AF_DCMotor motorFrontRight(2);
 AF_DCMotor motorFrontLeft(3);
 AF_DCMotor motorBackLeft(4);
 
+Servo scoop;
 int speed = 0;
+int pos = 0;
 
 void setup()
 {
@@ -29,6 +32,7 @@ void setup()
   motorFrontRight.setSpeed(speed);
   motorBackLeft.setSpeed(speed);
   motorFrontLeft.setSpeed(speed);
+  scoop.attach(9);
 }
 
 void loop()
@@ -92,6 +96,12 @@ void loop()
     motorFrontRight.setSpeed(speed);
     motorBackLeft.setSpeed(speed);
     motorFrontLeft.setSpeed(speed);
+  } else if (GamePad.isGreenPressed())
+  {
+    scoop.write(pos);
+  } else if (GamePad.isOrangePressed())
+  {
+    scoop.write(25);
   }
   if (Terminal.available())
   {
